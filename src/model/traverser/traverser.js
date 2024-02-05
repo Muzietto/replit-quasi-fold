@@ -1,6 +1,6 @@
 // drilldown in array
 export function aaa2(ctx, pos) {
-  console.log('aaa2', ctx, pos);
+  // console.log('aaa2', ctx, pos);
   return visitor => [
     ...ctx.slice(0, pos),
     visitor(),

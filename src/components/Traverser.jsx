@@ -17,10 +17,13 @@ import
     isBoolean,
     isNumber,
   } from '/src/model/traverser/traverser';
+import String from '/src/components/String';
 
 export default function Traverser({
   currentValue = {},
-  setCurrentValue = () => {}
+  setCurrentValue = () => {},
+  lastFocus = null,
+  setLastFocus = () => {},
 }) {
 
   console.log(JSON.stringify(currentValue));;
@@ -30,32 +33,28 @@ export default function Traverser({
       .map(chiave => transformed(
         chiave,
         currentValue[chiave],
-        r => xxx(currentValue, chiave)(r)
+        r => xxx(currentValue, chiave)(r),
+        chiave
       ))}
   </Box>;
 
-  function transformed(chiave, valore, returner) {
+  function transformed(chiave, valore, returner, path) {
     console.log('transforming', chiave, valore);
     return <Box key={`naww_${Math.random()}`} style={{ padding: 5, marginLeft: 10 }}>
-      {isString(valore) && <Flex style={{ height: 30 }} alignItems='center'>
-        <p style={{ marginRight: 10 }}>{`${chiave}`}</p>
-        <TextInput
-          value={valore}
-          style={{ height: 15 }}
-          onChange={ev => {
-            const newCurrentValue = returner(() => ev.target.value);
-            console.log('nCV', JSON.stringify(newCurrentValue));
-            setCurrentValue(newCurrentValue);
-          }}
-        />
-      </Flex>}
+      {isString(valore) && <String 
+         chiave={chiave}
+         valore={valore}
+         returner={returner}
+         path={path}
+         setCurrentValue={setCurrentValue}
+         lastFocus={lastFocus}
+         setLastFocus={setLastFocus}
+      />}
       {isArray(valore) && <>
         <p>{`${chiave} array`}</p>
         {valore.map((val, pos) =>
           transformed( // chiave, valore, returner
-            (isObject(val) || isArray(val))
-              ? pos
-              : pos,
+            pos,
             val,
             r => returner(() => {
               return aaa2(
@@ -63,6 +62,7 @@ export default function Traverser({
                 pos
               )(r);
             }),
+            `${path}.${pos}`
           ))}
       </>}
       {isObject(valore) && <div style={{ padding: 5, marginLeft: 0 }}>
@@ -77,6 +77,7 @@ export default function Traverser({
                 chiaveInterna
               )(r);
             }),
+            `${path}.${chiaveInterna}`
           ))}
       </div>}
       {/*isNumber(valore) && <Flex style={{ height: 30 }} alignItems='center'>

@@ -6,27 +6,29 @@ export default function App() {
 
   const [currentValue, setCurrentValue] = useState({
     key1: 'val1',
-    key2: [
-      'ciao',
-      'mamma',
-      {
-        gino: 'latilla',
-        pino: [
-          'grovio'
-        ],
-      }
-    ],
-    key3: 'val3',
-    key31: 'val31',
-    key312: 'val312',
-});
+    key11: 'val11',
+    ciao: {
+      fir: '123',
+      vog: [
+        "qwsjfokd",
+        [
+        'wer',
+        '234234',
+        ]
+      ],
+    }
+  });
 
-  console.log('cV', JSON.stringify(currentValue));
+  const [lastFocus, setLastFocus] = useState('');
+
+  // console.log('cV', JSON.stringify(currentValue));
   
   return <main>
       <Traverser
         currentValue={currentValue}
         setCurrentValue={setCurrentValue}
+        lastFocus={lastFocus}
+        setLastFocus={setLastFocus}
       />
     </main>
 }
