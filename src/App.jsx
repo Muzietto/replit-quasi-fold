@@ -3,27 +3,28 @@ import React, { useState } from 'react';
 import Traverser from '/src/components/Traverser';
 
 export default function App() {
-
   const [currentValue, setCurrentValue] = useState({
-    key1: 'val1',
-    key11: 'val11',
+    key1: true,
+    key11: [
+      false,
+      'ciao',
+      {
+        123:123,
+        wer:true,
+      },
+    ],
     ciao: {
-      fir: '123',
-      vog: [
-        "qwsjfokd",
-        [
-        'wer',
-        '234234',
-        ]
-      ],
-    }
+      fir: 123,
+      dfg: true,
+      qwe:'123',
+      ert:123,
+    },
   });
 
   const [lastFocus, setLastFocus] = useState('');
 
-  // console.log('cV', JSON.stringify(currentValue));
-  
-  return <main>
+  return (
+    <main>
       <Traverser
         currentValue={currentValue}
         setCurrentValue={setCurrentValue}
@@ -31,4 +32,5 @@ export default function App() {
         setLastFocus={setLastFocus}
       />
     </main>
+  );
 }

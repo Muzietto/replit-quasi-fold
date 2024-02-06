@@ -39,15 +39,3 @@ export function isString(valore) {
 export function isNumber(valore) {
   return typeof valore === 'number';
 }
-
-function add(a,b) {
-  return a+b;
-}
-
-export function subtract(a,b) {
-  return a-b;
-}
-  
-export default {
-  add,
-};
