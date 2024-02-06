@@ -14,11 +14,34 @@ export default function String({
   setLastFocus = () => {},
 }) {
 
+  console.log('lastFocus', lastFocus);
+
   return <Flex style={{ height: 30 }} alignItems='center'>
-      <p style={{ marginRight: 10 }}>{`${chiave}`}</p>
+      <div>
+      {(![...Array(101).keys()].includes(chiave))
+        ? <TextInput
+            id={`${path}_key`}
+            ref={inputRef => {
+              if (inputRef !== null && path !== '' && `${path}_key` === lastFocus) {
+                inputRef.focus();
+                inputRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            value={chiave} 
+            onChange={ev => {
+              const newCurrentValue = returner(() => ev.target.value, true);
+              setCurrentValue(newCurrentValue);
+              const parentPath = path.split('.').reverse().slice(1).reverse().join('.');
+              setLastFocus(`${parentPath}${(parentPath) ? '.' : ''}${ev.target.value}_key`);
+            }}
+        />
+          : <p style={{ marginRight: 10 }}>{`${chiave}`}</p>
+      }
+        </div>
       <TextInput
+        id={`${path}_value`}
         ref={inputRef => {
-          if (inputRef != null && path !== '' && path === lastFocus) {
+          if (inputRef !== null && path !== '' && `${path}_value` === lastFocus) {
             inputRef.focus();
             inputRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
@@ -27,9 +50,8 @@ export default function String({
         style={{ height: 15 }}
         onChange={ev => {
           const newCurrentValue = returner(() => ev.target.value);
-          //console.log('nCV', JSON.stringify(newCurrentValue));
           setCurrentValue(newCurrentValue);
-          setLastFocus(path);
+          setLastFocus(`${path}_value`);
         }}
       />
     </Flex>;

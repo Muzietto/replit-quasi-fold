@@ -4,21 +4,15 @@ import Traverser from '/src/components/Traverser';
 
 export default function App() {
   const [currentValue, setCurrentValue] = useState({
-    key1: true,
-    key11: [
-      false,
-      'ciao',
+      qwe:'123',
+      ert:true,
+    fgh: [
+      'gino',
       {
-        123:123,
-        wer:true,
+        qwe:123,
+        sgsgsgs:false,
       },
     ],
-    ciao: {
-      fir: 123,
-      dfg: true,
-      qwe:'123',
-      ert:123,
-    },
   });
 
   const [lastFocus, setLastFocus] = useState('');

@@ -29,7 +29,7 @@ export default function Traverser({
       .map(chiave => transformed(
         chiave,
         currentValue[chiave],
-        r => xxx(currentValue, chiave)(r),
+        (r, swapKey) => xxx(currentValue, chiave)(r, swapKey),
         chiave
       ))}
   </Box>;
@@ -49,7 +49,7 @@ export default function Traverser({
       {isArray(valore) && <>
         <p>{`${chiave} array`}</p>
         {valore.map((val, pos) =>
-          transformed( // chiave, valore, returner
+          transformed( // chiave, valore, returner, path
             pos,
             val,
             r => returner(() => {
@@ -67,11 +67,11 @@ export default function Traverser({
           .map(chiaveInterna => transformed(
             chiaveInterna,
             valore[chiaveInterna],
-            r => returner(() => {
+            (r, swapKey) => returner(() => {
               return xxx(
                 valore,
                 chiaveInterna
-              )(r);
+              )(r, swapKey);
             }),
             `${path}.${chiaveInterna}`
           ))}
@@ -88,8 +88,11 @@ export default function Traverser({
       {isBoolean(valore) && <Boolean 
          chiave={chiave}
          valore={valore}
+         path={path}
+         lastFocus={lastFocus}
          returner={returner}
          setCurrentValue={setCurrentValue}
+         setLastFocus={setLastFocus}
       />}
     </Box>
   }
