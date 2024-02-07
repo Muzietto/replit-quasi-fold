@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   TextInput,
   Flex,
@@ -14,7 +14,7 @@ export default function String({
   setLastFocus = () => {},
 }) {
 
-  console.log('lastFocus', lastFocus);
+  // console.log('lastFocus', lastFocus);
 
   return <Flex style={{ height: 30 }} alignItems='center'>
       <div>
@@ -34,10 +34,10 @@ export default function String({
               const parentPath = path.split('.').reverse().slice(1).reverse().join('.');
               setLastFocus(`${parentPath}${(parentPath) ? '.' : ''}${ev.target.value}_key`);
             }}
-        />
-          : <p style={{ marginRight: 10 }}>{`${chiave}`}</p>
+          />
+        : <p style={{ marginRight: 10 }}>{`${chiave}`}</p>
       }
-        </div>
+      </div>
       <TextInput
         id={`${path}_value`}
         ref={inputRef => {

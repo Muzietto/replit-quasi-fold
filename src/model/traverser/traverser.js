@@ -8,10 +8,25 @@ export function aaa2(ctx, pos) {
   ];
 }
 
+export function removed(ctx, key) {
+  if (ctx.length && ctx.slice) {
+    console.log('removing from array');
+    return [...ctx.slice(0, key), ...ctx.slice(key + 1)];
+  }
+  console.log('removing from object');
+  return Object.keys(ctx).reduce(
+    (acc, curr) =>
+      (curr !== key)
+        ? { ...acc, [curr]: ctx[curr] }
+        : acc,
+    {},
+  );
+}
+
 // drilldown in object
 export function xxx(ctx, key) {
   return (visitor, swapKey) => {
-    console.log('swapKey=', !!swapKey);
+    // console.log('swapKey=', !!swapKey);
     return !swapKey
       ? {
           ...ctx,
@@ -25,21 +40,6 @@ export function xxx(ctx, key) {
       {},
     );
   };
-}
-
-// substitute in dictionary
-export function yyy(ctx, key, value) {
-  return {
-    ...ctx,
-    [key]: value,
-  };
-}
-
-export function swapKey(ctx, key, newKey) {
-  return Object.keys(ctx)
-    .reduce((acc, curr) => ((curr !== key) 
-      ? { ...acc, [curr]: ctx[curr] } 
-      : { ...acc, [newKey]: ctx[key] }), {});
 }
 
 export function isObject(valore) {

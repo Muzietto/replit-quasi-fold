@@ -16,7 +16,8 @@ export default function Boolean({
   setLastFocus = () => {},
 }) {
   return <Flex style={{ height: 35 }} alignItems='center'>
-      <TextInput
+    {(![...Array(101).keys()].includes(chiave))
+      ? <TextInput
           id={`${path}_key`}
           ref={inputRef => {
             if (inputRef !== null && path !== '' && `${path}_key` === lastFocus) {
@@ -32,6 +33,8 @@ export default function Boolean({
             setLastFocus(`${parentPath}${(parentPath) ? '.' : ''}${ev.target.value}_key`);
           }}
       />
+      : <p style={{ marginRight: 10 }}>{`${chiave}`}</p>
+    }
     <Flex justifyContent='center' style={{ marginTop: 8 }}>
       <FormLabel style={{ marginRight: '10px' }}>falso</FormLabel>
       <Radio
