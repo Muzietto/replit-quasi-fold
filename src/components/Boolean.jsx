@@ -38,16 +38,14 @@ export default function Boolean({
     <Flex justifyContent='center' style={{ marginTop: 8 }}>
       <FormLabel style={{ marginRight: '10px' }}>falso</FormLabel>
       <Radio
-        id={false}
+        id={`${path}_false`}
         isChecked={!valore}
-        labelText='falso'
         style={{ marginRight: 8 }}
         onChange={() => { setCurrentValue(returner(() => false)); setLastFocus(''); }}
       />
       <Radio
-        id={true}
+        id={`${path}_true`}
         isChecked={valore}
-        labelText='vero'
         onChange={() => { setCurrentValue(returner(() => true)); setLastFocus(''); }}
       />
       <FormLabel style={{ marginLeft: '10px' }}>vero</FormLabel>

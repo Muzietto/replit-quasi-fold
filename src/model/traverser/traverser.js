@@ -1,5 +1,5 @@
 // drilldown in array
-export function aaa2(ctx, pos) {
+export function ddArray(ctx, pos) {
   // console.log('aaa2', ctx, pos);
   return visitor => [
     ...ctx.slice(0, pos),
@@ -8,23 +8,26 @@ export function aaa2(ctx, pos) {
   ];
 }
 
-export function removed(ctx, key) {
-  if (ctx.length && ctx.slice) {
-    console.log('removing from array');
-    return [...ctx.slice(0, key), ...ctx.slice(key + 1)];
-  }
-  console.log('removing from object');
-  return Object.keys(ctx).reduce(
-    (acc, curr) =>
-      (curr !== key)
-        ? { ...acc, [curr]: ctx[curr] }
-        : acc,
-    {},
-  );
+export function removed(ctx) {
+  return keyF => {
+    const key = keyF();
+    if (ctx.length && ctx.slice) {
+      console.log('removing from array');
+      return [...ctx.slice(0, key), ...ctx.slice(key + 1)];
+    }
+    console.log('removing from object');
+    return Object.keys(ctx).reduce(
+      (acc, curr) =>
+        (curr !== key)
+          ? { ...acc, [curr]: ctx[curr] }
+          : acc,
+      {},
+    );
+    }
 }
 
 // drilldown in object
-export function xxx(ctx, key) {
+export function ddObject(ctx, key) {
   return (visitor, swapKey) => {
     // console.log('swapKey=', !!swapKey);
     return !swapKey

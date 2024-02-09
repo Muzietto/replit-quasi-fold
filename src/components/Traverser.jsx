@@ -8,8 +8,8 @@ import {
 import { CloseIcon } from '@contentful/f36-icons';
 import 
   { 
-    xxx,
-    aaa2,
+    ddObject,
+    ddArray,
     removed,
     isString,
     isArray,
@@ -33,21 +33,20 @@ export default function Traverser({
       .map(chiave => transformed(
         chiave,
         currentValue[chiave],
-        (r, swapKey) => xxx(currentValue, chiave)(r, swapKey),
         chiave,
-        currentValue
+        (r, swapKey) => ddObject(currentValue, chiave)(r, swapKey),
+        r => removed(currentValue)(r)
       ))}
   </Box>;
 
-  function transformed(chiave, valore, returner, path, context) { // contexter = returner of the context
-    // console.log('transforming', chiave, valore);
+  function transformed(chiave, valore, path, returner, remover) {
+
     const depth = path.split('.').length;
     return <Flex key={`naww_${Math.random()}`} style={{ padding: 5, marginLeft: 10 }}>
       <Tooltip placement='top' content='DELETE'>
         <IconButton
           variant='transparent'
           style={{
-            // position: 'absolute',
             top: '1px',
             right: '1px',
             padding: '0.25rem',
@@ -55,10 +54,10 @@ export default function Traverser({
             zIndex: 1,
           }}
           onClick={() => {
-            console.log('###', context, chiave);
-            const zzz = returner(() => removed(context, chiave));
-            console.log('@@@', zzz);
-            setCurrentValue(zzz);
+            console.log('### removing ###', chiave, depth);
+            const newCurrentValue = remover(() => chiave);
+            console.log('nCV=', newCurrentValue);
+            setCurrentValue(newCurrentValue);
           }}
           icon={<CloseIcon />}
           size='small'
@@ -68,48 +67,48 @@ export default function Traverser({
         <p>{`${chiave} object`}</p>
         <div style={{ padding: 5, marginLeft: -35, marginTop: -5 }}>
           {Object.keys(valore)
-            .map(chiaveInterna => transformed(
+            .map(chiaveInterna => transformed( // chiave, valore, returner, path, remover
               chiaveInterna,
               valore[chiaveInterna],
+              `${path}.${chiaveInterna}`,
               (r, swapKey) => returner(() => {
-                return xxx(
+                return ddObject(
                   valore,
                   chiaveInterna
                 )(r, swapKey);
               }),
-              `${path}.${chiaveInterna}`,
-              valore
+              r => returner(() => removed(valore)(r))
             ))}
           </div>
-        </div>}
-      {isString(valore) && <div style={{ marginLeft: -depth, marginTop: 0 }}>
-          <String 
-             chiave={chiave}
-             valore={valore}
-             returner={returner}
-             path={path}
-             setCurrentValue={setCurrentValue}
-             lastFocus={lastFocus}
-             setLastFocus={setLastFocus}
-          />
         </div>}
       {isArray(valore) && <div style={{ padding: 5, marginLeft: 10 * (depth-1), marginTop: -15 }}>
         <p>{`${chiave} array`}</p>
         <div style={{ padding: 5, marginLeft: -30, marginTop: -5 }}>
           {valore.map((val, pos) =>
-            transformed( // chiave, valore, returner, path, context
+            transformed( // chiave, valore, returner, path, remover
               pos,
               val,
+              `${path}.${pos}`,
               r => returner(() => {
-                return aaa2(
+                return ddArray(
                   valore,
                   pos
                 )(r);
               }),
-              `${path}.${pos}`,
-              valore
+              r => returner(() => removed(valore)(r))
             ))}
         </div>
+      </div>}
+      {isString(valore) && <div style={{ marginLeft: -depth, marginTop: 0 }}>
+        <String 
+           chiave={chiave}
+           valore={valore}
+           returner={returner}
+           path={path}
+           setCurrentValue={setCurrentValue}
+           lastFocus={lastFocus}
+           setLastFocus={setLastFocus}
+        />
       </div>}
       {isNumber(valore) && <div style={{ marginLeft: -depth, marginTop: 0 }}>
           <String 
