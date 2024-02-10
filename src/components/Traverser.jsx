@@ -3,7 +3,8 @@ import {
   Box, 
   IconButton, 
   Flex, 
-  Tooltip 
+  Tooltip,
+  DragHandle,
 } from '@contentful/f36-components';
 import { 
   DeleteIcon, 
@@ -52,6 +53,7 @@ export default function Traverser({
 
     return <Box key={`naww_${Math.random()}`} style={{ padding: 5, marginLeft: 10 }}>
         <Flex flexDirection='row' fullWidth>
+          <DragHandle label='Drag handle' />
           <Tooltip placement='top' content={`${(adderExpanded) ? 'CLOSE ADD' : 'ADD'}`}>
             <IconButton
               variant='transparent'
