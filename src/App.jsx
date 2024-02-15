@@ -4,7 +4,7 @@ import Traverser from '/src/components/Traverser';
 
 export default function App() {
   const [currentValue, setCurrentValue] = useState({
-    wtrue:true,
+    "ciao": "qwer",
     });
 
   const [lastFocus, setLastFocus] = useState('');
@@ -17,6 +17,7 @@ export default function App() {
         lastFocus={lastFocus}
         setLastFocus={setLastFocus}
       />
+      <pre>{JSON.stringify(currentValue, null,2)}</pre>
     </main>
   );
 }

@@ -103,8 +103,7 @@ export function Transformed({
         lastFocus={lastFocus}
         setLastFocus={setLastFocus}
     />}
-    {valore 
-      && (isString(valore) 
+    {(isString(valore) // cannot check valore because value can be false
         || isBoolean(valore) 
         || isNumber(valore))
       && <Leaf 

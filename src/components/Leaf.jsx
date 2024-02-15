@@ -69,7 +69,7 @@ function String({
   lastFocus = '',
   setLastFocus = () => {},
 }) {
-  console.log('STRING');
+  console.log('STRING, valore =', valore);
   return <Flex style={{ height: 30 }} alignItems='center'>
       <div>
       {(![...Array(101).keys()].includes(chiave))
